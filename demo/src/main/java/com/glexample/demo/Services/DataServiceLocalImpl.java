@@ -1,7 +1,9 @@
 package com.glexample.demo.Services;
 
 import com.glexample.demo.dto.Book;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,8 +24,8 @@ public class DataServiceLocalImpl implements DataService {
         {
             return books.get(name);
         }
-        //todo error 404
-        return new Book("Harry Potter", 250);
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
     }
 
     public void setBook(Book book)
