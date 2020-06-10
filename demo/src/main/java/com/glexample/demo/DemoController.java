@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 @RequestMapping(path="/services")
 public class DemoController {
+    private static final Logger LOG = LoggerFactory.getLogger(Book.class);
     @Autowired
     private DataService dataService;
 
@@ -30,7 +31,7 @@ public class DemoController {
 
     @PostMapping(path="/postBook")
     public void addBook(@RequestBody Book book) {
-        //LOG.info("addBook: {}", book.getName());
+        LOG.info("addBook: {}", book.getName());
         dataService.setBook(book);
     }
 }
