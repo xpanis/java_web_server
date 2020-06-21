@@ -1,9 +1,8 @@
-package com.glexample.demo.Services;
-
+package com.glexample.demo.repository;
 import com.glexample.demo.dto.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DataServiceDBImpl  extends JpaRepository<Book, String> , DataService {
+public interface BookRepository extends JpaRepository<Book, String>{
 
     public Book findByName(String name);
 }
