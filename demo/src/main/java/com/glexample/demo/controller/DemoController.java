@@ -1,6 +1,8 @@
 package com.glexample.demo.controller;
 
+import com.glexample.demo.dto.Author;
 import com.glexample.demo.dto.Book;
+import com.glexample.demo.repository.AuthorRepository;
 import com.glexample.demo.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class DemoController {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @GetMapping(path="/data")
     public String getData() {
@@ -27,6 +31,11 @@ public class DemoController {
         return bookRepository.findByName(name);
     }
 
+    @GetMapping(path="/authorBooks")
+    public List<Book> getAuthorBooks(@RequestParam String authorName) {
+        return bookRepository.findAll();//Where book.getAuthor().getName() == authorName)
+    }
+
     @GetMapping(path="/allBooks")
     public List<Book> getBook() {
         return bookRepository.findAll();
@@ -35,6 +44,10 @@ public class DemoController {
     @PostMapping(path="/postBook")
     public void addBook(@RequestBody Book book) {
         LOG.info("addBook: {}", book.getName());
+        if (!authorRepository.existsByName(book.getAuthor().getName()))
+        {
+            authorRepository.save(new Author(book.getAuthor().getName()));
+        }
         bookRepository.save(book);
     }
 }

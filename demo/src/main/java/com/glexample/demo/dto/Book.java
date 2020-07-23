@@ -1,9 +1,6 @@
 package com.glexample.demo.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -11,6 +8,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @ManyToOne
+    @JoinColumn(name="AUTHOR_ID")
+    private Author author;
     private int numberOfPages;
 
     public Book() {}
@@ -32,6 +32,13 @@ public class Book {
         this.id = id;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
     public void setName(String name) {
         this.name = name;
